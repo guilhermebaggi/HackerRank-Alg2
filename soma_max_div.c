@@ -1,62 +1,46 @@
+/*Dado um vetor de inteiros. Implemente uma função, utilizando divisão e conquista, que encontre a soma máxima no vetor. Por exemplo: para o vetor v = {-1, 3, 0, -2, 1, 3, -4, 5}, a soma máxima é 12 (3 + 0 + 1 + 3 + 5).
+
+Input Format
+
+A primeira linha deve ser um número inteiro n referente ao tamanho do vetor. Em seguinda, Para cada uma das próximas n linhas devem ser lidos os elementos do vetor.
+
+Constraints
+
+*/
 #include <stdio.h>
 #include <limits.h>
+#include <stdlib.h>
 
-int maxCrossingSum(int arr[], int left, int mid, int right) {
-    int sum = 0;
-    int left_sum = INT_MIN;
+int somMaxDivConq(int vet[], int i, int f) {
+    int x;
+    if (i > f) 
+        return 0;
 
-    for (int i = mid; i >= left; i--) {
-        sum += arr[i];
-        if (sum > left_sum) {
-            left_sum = sum;
-        }
+    if (i == f){
+        if (vet[i] < 0)
+            return 0;
+        else
+            return vet[i];
     }
 
-    sum = 0;
-    int right_sum = INT_MIN;
-
-    for (int i = mid + 1; i <= right; i++) {
-        sum += arr[i];
-        if (sum > right_sum) {
-            right_sum = sum;
-        }
-    }
-
-    return left_sum + right_sum;
+    x = (i + f) / 2;
+    
+    return somMaxDivConq(vet, i, x) + somMaxDivConq(vet, x + 1, f);
 }
 
-int maxSubArraySum(int arr[], int left, int right) {
-    if (left == right) {
-        return arr[left];
-    }
-
-    int mid = (left + right) / 2;
-
-    int left_sum = maxSubArraySum(arr, left, mid);
-    int right_sum = maxSubArraySum(arr, mid + 1, right);
-    int cross_sum = maxCrossingSum(arr, left, mid, right);
-
-    if (left_sum >= right_sum && left_sum >= cross_sum) {
-        return left_sum;
-    } else if (right_sum >= left_sum && right_sum >= cross_sum) {
-        return right_sum;
-    } else {
-        return cross_sum;
-    }
-}
-
-int main() {
+int main(){
     int n;
+    int *vet;
+
     scanf("%d", &n);
-    
-    int arr[n];
-    
-    for (int i = 0; i < n; i++) {
-        scanf("%d", &arr[i]);
-    }
 
-    int result = maxSubArraySum(arr, 0, n - 1);
-    printf("%d\n", result);
-
+    vet = malloc(sizeof(int) * n);
+    
+    for (int i = 0; i < n; i++)
+        scanf("%d", &vet[i]);
+   
+    printf("%d\n", somMaxDivConq(vet, 0, n-1));
+    
+    free(vet);
     return 0;
 }

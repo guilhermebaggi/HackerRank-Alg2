@@ -176,6 +176,7 @@ void imprimir(HashT *t){
 
 
 int main(void){
+    
     int n, end, key, i;
     
     scanf("%d", &n);

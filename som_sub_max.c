@@ -3,8 +3,7 @@ A subsequência máxima é aquela que tem o maior valor de soma entre todos os o
 Implemente, utilizando a estratégia força-bruta, uma função que retorne o somatório da subsequência máxima.*/
 
 #include <stdio.h>
-#include <limits.h> // Para INT_MIN
-
+#include <limits.h> 
 int subMax(int q, int v[]){
 
     int max = INT_MIN;
@@ -28,11 +27,9 @@ int main(void){
     int quant;
     int i;
 
-    // quantidade de elemento no arranjo
     scanf("%d", &quant);
     int v[quant];
 
-    // elementos do arranjo
     for (i = 0; i < quant; i++){
         scanf("%d", &v[i]);
     }
